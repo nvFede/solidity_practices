@@ -1,22 +1,25 @@
-# First Solidity Contract with tests 
+# Private Bank Solidity Contract with tests 
 
-Just a simple Set and get a new Message contract 
+A private bank that accept deposits and withdrawals
+
+Solidity features:
+
+- mappings
+- modifiers  
+- events
 
 
 ## Tests
 
 
 
-    Deployment
+    Testing Bank Functions
 
-      ✔ Check if the contract deploys successfully
- 
-    Testing Message Functions
-
-      ✔ User can set and get a new message
+      ✔ Client can enroll to the bank filling the minimum deposit (2722ms)
+      ✔ Client can deposit funds to his account (169ms)
 
 ### Technologies
 
-* Solidity
-* Hardhat
-* Chai
+* [Solidity](https://solidity-es.readthedocs.io/es/latest/)
+* [Hardhat](https://hardhat.org/)
+* [Chai](https://www.chaijs.com/api/bdd/)
