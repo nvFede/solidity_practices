@@ -1,0 +1,25 @@
+{
+  "name": "solidity-practices",
+  "version": "1.0.0",
+  "description": "just simple practices on solidity",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nvFede/solidity-practices.git"
+  },
+  "keywords": [
+    "Solidity"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nvFede/solidity-practices/issues"
+  },
+  "homepage": "https://github.com/nvFede/solidity-practices#readme",
+  "devDependencies": {
+    "@openzeppelin/contracts": "^4.7.3"
+  }
+}

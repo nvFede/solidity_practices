@@ -1,0 +1,40 @@
+{
+  "_format": "hh-sol-cache-2",
+  "files": {
+    "/Users/federico/Documents/udacity/solidity-practices/3_FallBacks/contracts/FallbackTest.sol": {
+      "lastModificationDate": 1663631401402,
+      "contentHash": "68ae22cdd63152bb7a706af4ad92ff3e",
+      "sourceName": "contracts/FallbackTest.sol",
+      "solcConfig": {
+        "version": "0.8.17",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.7.0 <0.9.0"
+      ],
+      "artifacts": [
+        "FallbackTest"
+      ]
+    }
+  }
+}
