@@ -89,7 +89,7 @@ contract privateBank {
         
         emit accountClosed(msg.sender, msg.value, block.timestamp);
         clientCount--;
-
+        delete accounts[msg.sender];
         return true;
 
     }
