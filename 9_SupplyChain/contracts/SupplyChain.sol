@@ -18,9 +18,12 @@ contract SupplyChain {
 
     mapping ( uint => Item ) items;
 
+
     event forSaleEvent(uint skuCount);
+    event newItemAdded(string name, uint price);
     event soldEvent(uint sku); 
     event shippedEvent(uint sku);
+
 
     modifier onlyOwner() {
         require(msg.sender == owner, "Only the owner can perform this action.");
@@ -60,7 +63,7 @@ contract SupplyChain {
         skuCount = 0;
     }
 
-    function addItem(string memory _name, uint _price) public onlyOwner {
+    function addItem(string memory _name, uint _price) public {
 
         skuCount = skuCount + 1;
         emit forSaleEvent(skuCount);
@@ -72,7 +75,7 @@ contract SupplyChain {
             seller : payable(msg.sender),
             buyer  : payable(0)
         });
-
+        emit newItemAdded(_name, _price);
     }
 
     function buyItem(uint _sku) public payable 
