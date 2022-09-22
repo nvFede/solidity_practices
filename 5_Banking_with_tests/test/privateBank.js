@@ -63,8 +63,37 @@ describe("Private Bank Contract Testing...\n", function () {
                 { value: thirdDeposit }
             );
 
+            const accountBalance = await deployedContract.checkAccountBalance();
+            expect(accountBalance).to.be.equal(
+                ethers.utils.parseEther('20')
+            ).to.emit("fundsDeposited");
             
+        });
+
+        it("client can withdraw funds from his account (fire event withdrawal done)", async() => {
+
+            const firstDeposit = ethers.utils.parseEther('12');
+            const secondDeposit = ethers.utils.parseEther('3');
+            const thirdDeposit = ethers.utils.parseEther('5');
+
+            const { deployedContract, client1 } = await loadFixture(deployContractFixture);
+
+            const transaction1 = await deployedContract.connect(client1).enrollClient(
+                { value: firstDeposit }
+            );
+
+            const transaction2 = await deployedContract.connect(client1).depositFunds(
+                { value: secondDeposit }
+            );
+            const transaction3 = await deployedContract.connect(client1).depositFunds(
+                { value: thirdDeposit }
+            );
+
+            const withdrawTx = await deployedContract.connect(client1).withdrawFunds(firstDeposit, {from: client1.address});
             
+            //await expect(withdrawTx).to.emit('withdrawalDone');
+
+            console.log(withdrawTx);
         });
         
     });

@@ -1,0 +1,76 @@
+{
+  "_format": "hh-sol-cache-2",
+  "files": {
+    "/Users/federico/Documents/udacity/solidity-practices/1_Message/contracts/Message.sol": {
+      "lastModificationDate": 1663367229303,
+      "contentHash": "07c1c39381dcd900d12b45896886882a",
+      "sourceName": "contracts/Message.sol",
+      "solcConfig": {
+        "version": "0.8.17",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.7.0 <0.9.0"
+      ],
+      "artifacts": [
+        "Message"
+      ]
+    },
+    "/Users/federico/Documents/udacity/solidity-practices/2_Private_Message/contracts/Message.sol": {
+      "lastModificationDate": 1663369630747,
+      "contentHash": "58f990e42c28276447da85c033f7e1d3",
+      "sourceName": "contracts/Message.sol",
+      "solcConfig": {
+        "version": "0.8.17",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.7.0 <0.9.0"
+      ],
+      "artifacts": [
+        "Message",
+        "Ownable"
+      ]
+    }
+  }
+}

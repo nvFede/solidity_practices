@@ -6,15 +6,15 @@ const { ethers } = require("hardhat");
 // advantage of Hardhat Network's snapshot functionality.
 const { loadFixture } = require("@nomicfoundation/hardhat-network-helpers");
 
-describe("Fallback Contract Testing...", function () {
+describe("Lottery Tickets Contract Testing...", function () {
 
     // We define a fixture to reuse the same setup in every test. We use
     // loadFixture to run this setup once, snapshot that state, and reset Hardhat
     // Network to that snapshot in every test.
     async function deployContractFixture() {
         // Get the ContractFactory and Signers here.
-        const MessageContract = await ethers.getContractFactory("FallbackTest");
-        const [owner, user1] = await ethers.getSigners();
+        const MessageContract = await ethers.getContractFactory("Lottery");
+        const [owner, addr1, addr2, addr3, addr4] = await ethers.getSigners();
 
         // To deploy our contract, we just have to call Token.deploy() and await
         // its deployed() method, which happens onces its transaction has been
@@ -25,7 +25,8 @@ describe("Fallback Contract Testing...", function () {
 
         // Fixtures can return anything you consider useful for your tests
         return { 
-            MessageContract, deployedContract, owner, user1
+            MessageContract, deployedContract, 
+            owner, addr1, addr2, addr3, addr4  
         };
     }
 
@@ -43,38 +44,36 @@ describe("Fallback Contract Testing...", function () {
         });
     });
         
-    describe("Testing Fallback/receive functions", () => {
-        it("Fallback function executed with the corresponding Log event", async () => {
+    describe("Lottery Functions Test", () => {
+        it("Check the current Lottery Ticket price greater than Zero", async () => {
           
-            const { deployedContract, owner, user1 } = await loadFixture(deployContractFixture);
+            const { deployedContract, addr1 } = await loadFixture(deployContractFixture);
 
-            
-            let tx = {
-                to: deployedContract.address,
-                value: 1000
-            };
+            const ticketPrice = await deployedContract.viewTicketPrice();
            
-            const transaction = await owner.sendTransaction(tx);
-            const rc = await transaction.wait();
-            console.log('====================================');
-            //console.log(rc.events.find(event => event.event === 'Transfer'));
-            console.log('====================================');
-
-            // await deployedContract.connect(user1).fallback(tx);
-           
-
-            // await deployedContract.fund(true, tx);
-
-            //console.log(tx);
-            //await deployedContract.sendTransaction(tx);
+            expect(Number(ticketPrice)).to.be.greaterThan(0);
             
         });
 
-        it("Receive function executed with the corresponding Log event", async () => {
+        it("A user can buy a Ticket", async () => {
+            const { deployedContract, addr1 } = await loadFixture(deployContractFixture);
+
+            const buyTicket = await deployedContract.connect(addr1).buyTicket(
+                { value: ethers.utils.parseEther("1") }
+            );
+
+            // "The owner can't join the loterry"
            
+            expect(buyTicket.value).to.be.not.revertedWith(
+                "Please paid the correct amount."
+            );
         });
 
-      
+        it("Owner can Pick a winner", async () => {
+
+
+
+        });
         
     });
 
