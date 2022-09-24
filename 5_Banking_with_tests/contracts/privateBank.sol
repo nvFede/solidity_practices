@@ -3,7 +3,7 @@ pragma solidity >=0.7.0 <0.9.0;
 
 contract privateBank {
 
-    address payable public BANK_ADDRESS;
+    address payable public BANK_MANAGER;
     uint private contractBalance;
     uint private clientCount;
 
@@ -18,7 +18,7 @@ contract privateBank {
     mapping(address  => Account) accounts;
 
     modifier onlyBankManager() {
-        require(BANK_ADDRESS == msg.sender, "Only the bank manager can perform this action.");
+        require(BANK_MANAGER == msg.sender, "Only the bank manager can perform this action.");
         _;
     }
     modifier isValidAddress() {
@@ -45,7 +45,7 @@ contract privateBank {
     event miniumDepositChanged(uint);
 
     constructor() {
-        BANK_ADDRESS = payable(msg.sender);
+        BANK_MANAGER = payable(msg.sender);
         minimumInicialDeposit = 10 ether;
         clientCount = 0;
     }
@@ -98,8 +98,8 @@ contract privateBank {
         return clientCount;
     }
 
-    function viewcontractBalance() public view onlyBankManager returns(uint) {
-        return address(this).balance;
+    function viewcontractBalance() public view onlyBankManager returns(address, uint) {
+        return (address(this), address(this).balance);
     }
 
     function changeMiniumDeposit(uint _minimum) public onlyBankManager{

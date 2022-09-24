@@ -9,6 +9,12 @@ const { loadFixture } = require("@nomicfoundation/hardhat-network-helpers");
 describe("Private Bank Contract Testing...\n", function () {
 
     let minimumDeposit = 10;
+    let BANK_ADDRESS;
+    let client1_addr;
+    let client2_addr;
+    let client3_addr;
+    let client4_addr;
+    let client5_addr;
 
     // We define a fixture to reuse the same setup in every test. We use
     // loadFixture to run this setup once, snapshot that state, and reset Hardhat
@@ -25,9 +31,24 @@ describe("Private Bank Contract Testing...\n", function () {
 
         await deployedContract.deployed();
 
+       
+
         // Fixtures can return anything you consider useful for your tests
         return { BankContract, deployedContract, bankManager, client1, client2, client3, client4, client5 };
     }
+
+    describe("Bank Data", async () => {
+        const { deployedContract, bankManager, client1, client2, client3, client4, client5 } = await loadFixture(deployContractFixture);
+        console.log("      ==========================================================\n");
+        console.log(`      - Bank Address:         `, deployedContract.address);
+        console.log(`      - Bank Manager Address: `, bankManager.address);
+        console.log(`      - Client 1 Address:     `, client1.address);
+        console.log(`      - Client 2 Address:     `, client2.address);
+        console.log(`      - Client 3 Address:     `, client3.address);
+        console.log(`      - Client 4 Address:     `, client4.address);
+        console.log(`      - Client 5 Address:     `, client5.address);
+        console.log("      ==========================================================\n");
+    });
         
     describe("Testing Bank Functions\n", () => {
         it("Client can enroll to the bank filling the minimum deposit (fire event newClientEnrolled)", async () => {
@@ -89,11 +110,17 @@ describe("Private Bank Contract Testing...\n", function () {
                 { value: thirdDeposit }
             );
 
-            const withdrawTx = await deployedContract.connect(client1).withdrawFunds(firstDeposit, {from: client1.address});
             
             //await expect(withdrawTx).to.emit('withdrawalDone');
+            //console.log(await deployedContract.connect(client1).checkAccountBalance());
+            console.log(await deployedContract.address);
+            
+            const withdrawTx = await deployedContract.connect(client1).withdrawFunds(firstDeposit);
+            
+            //console.log(await deployedContract.connect(client1).checkAccountBalance());
 
-            console.log(withdrawTx);
+
+
         });
         
     });

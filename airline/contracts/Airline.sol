@@ -1,11 +1,10 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.7.0 <0.9.0;
 
-import "@openzeppelin/contracts/access/Ownable.sol";
 
-contract Airline is Ownable{
+contract Airline{
 
-    address payable contractOwner;
+    address AirlineAddress;
 
     struct Client {
         uint clientID;
@@ -31,8 +30,13 @@ contract Airline is Ownable{
     event FlightAdded(string origin, string destination, uint price);
     event FlightPurchased(address indexed client,uint flightID, string origin, string destination, uint price);
     
+    modifier onlyOwner {
+        require(msg.sender == AirlineAddress, "only owner can perform this action.");
+        _;
+    }
+
     constructor() {
-        contractOwner == payable(msg.sender);
+        AirlineAddress = msg.sender;
     }
 
     function addFlight(string memory _origin, string memory _destination, uint _price) public  onlyOwner {
@@ -43,7 +47,7 @@ contract Airline is Ownable{
 
     function buyFlight(uint _flightID) public payable {
         Flight memory flight = flights[_flightID];
-        require(msg.value == flight.price);
+        require(msg.value == flight.price, "Please pay the exact amount");
 
         Client storage client = clients[msg.sender];
         client.fidelityPts += 10;
@@ -71,7 +75,7 @@ contract Airline is Ownable{
     }
 
     function getAirlineBalance() public view onlyOwner returns(uint) {
-        return contractOwner.balance;
+        return address(this).balance;
     }
 
 
