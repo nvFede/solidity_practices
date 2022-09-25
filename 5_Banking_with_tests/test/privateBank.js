@@ -83,6 +83,8 @@ describe("Private Bank Contract Testing...\n", function () {
             const transaction3 = await deployedContract.depositFunds(
                 { value: thirdDeposit }
             );
+            
+            
 
             const accountBalance = await deployedContract.checkAccountBalance();
             expect(accountBalance).to.be.equal(
@@ -109,19 +111,36 @@ describe("Private Bank Contract Testing...\n", function () {
             const transaction3 = await deployedContract.connect(client1).depositFunds(
                 { value: thirdDeposit }
             );
-
             
-            //await expect(withdrawTx).to.emit('withdrawalDone');
-            //console.log(await deployedContract.connect(client1).checkAccountBalance());
-            console.log(await deployedContract.address);
+            let currentBalance = await deployedContract.connect(client1).checkAccountBalance();
+
+            const withdrawTx = await deployedContract.connect(client1).withdrawFunds(firstDeposit);  
+            let afterBalance = Number(await deployedContract.connect(client1).checkAccountBalance());
             
-            const withdrawTx = await deployedContract.connect(client1).withdrawFunds(firstDeposit);
+            expect(afterBalance == Number(currentBalance) - Number(firstDeposit));
+            expect(withdrawTx).to.emit("withdrawalDone").withArgs(
+                client1.address, Number(firstDeposit), Math.floor(new Date() / 1000)
+            );
             
-            //console.log(await deployedContract.connect(client1).checkAccountBalance());
-
-
-
         });
+
+        it("Client can close his account", async () => {
+            const firstDeposit = ethers.utils.parseEther('12');
+            const secondDeposit = ethers.utils.parseEther('3');
+            const thirdDeposit = ethers.utils.parseEther('5');
+
+            const { deployedContract, client1 } = await loadFixture(deployContractFixture);
+
+            const transaction1 = await deployedContract.connect(client1).enrollClient(
+                { value: firstDeposit }
+            );
+
+            
+            const bal = await deployedContract.connect(client1).checkAccountBalance();
+            const tx = await deployedContract.connect(client1).closeAccount();
+            expect(tx).to.emit("accountClosed");
+            //expect(Number(balAfter)).equal(Number(bal) + Number(firstDeposit))
+        })
         
     });
 

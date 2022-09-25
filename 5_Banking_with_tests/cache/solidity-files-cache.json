@@ -2,8 +2,8 @@
   "_format": "hh-sol-cache-2",
   "files": {
     "/Users/federico/Documents/udacity/solidity-practices/5_Banking_with_tests/contracts/privateBank.sol": {
-      "lastModificationDate": 1663865872775,
-      "contentHash": "491fd6e8bf7c746e3dfe2bfebc399eb7",
+      "lastModificationDate": 1664091522967,
+      "contentHash": "4cfa0f1d45ef2db6558143ee5223fa8b",
       "sourceName": "contracts/privateBank.sol",
       "solcConfig": {
         "version": "0.8.17",

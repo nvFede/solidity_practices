@@ -4,8 +4,8 @@ pragma solidity >=0.7.0 <0.9.0;
 contract privateBank {
 
     address payable public BANK_MANAGER;
-    uint private contractBalance;
-    uint private clientCount;
+    uint public contractBalance;
+    uint public clientCount;
 
     struct Account {
         address owner;
@@ -38,10 +38,10 @@ contract privateBank {
         _;
     }
 
-    event newClientEnrolled(address, uint, uint);
-    event withdrawalDone(address, uint, uint);
-    event accountClosed(address, uint, uint);
-    event fundsDeposited(address, uint, uint);
+    event newClientEnrolled(address indexed, uint, uint);
+    event withdrawalDone(address indexed, uint, uint);
+    event accountClosed(address indexed, uint, uint);
+    event fundsDeposited(address indexed, uint, uint);
     event miniumDepositChanged(uint);
 
     constructor() {
@@ -87,9 +87,11 @@ contract privateBank {
         accounts[msg.sender].balance -= currentBal;
         withdrawTo.transfer(currentBal);
         
-        emit accountClosed(msg.sender, msg.value, block.timestamp);
         clientCount--;
         delete accounts[msg.sender];
+        
+        emit accountClosed(msg.sender, msg.value, block.timestamp);
+        
         return true;
 
     }
